@@ -29,52 +29,78 @@ char* smmObj_getTypeName(int type)
       return (char*)smmNodeName[type];
 }
 
+typedef enum smmObjGrade {
+    smmObjGrade_Ap = 0,
+    smmObjGrade_A0,
+    smmObjGrade_Am,
+    smmObjGrade_Bp,
+    smmObjGrade_B0,
+    smmObjGrade_Bm,
+    smmObjGrade_Cp,
+    smmObjGrade_C0,
+    smmObjGrade_Cm
+} smmObjGrade_e;
 
+//1. 구조체 형식 정의
+typedef struct smmObject{
+	char name[MAX_CHARNAME];
+	smmObjType_e objType;
+	int type;
+	int credit;
+	int energy;
+	smmObjGrade_e grade;
+}; smmObject_t; 
+
+//static smmObject_t smm_node[MAX_NODE];
+//static int smmObj_noNode = 0;
+
+//2. 구조체 배열 변수 정의 
+
+static smmObject_t smm_node[MAX_NODE];
+
+#if 0
 static char smmObj_name[MAX_NODE][MAX_CHARNAME];
 static int smmObj_type[MAX_NODE];
 static int smmObj_credit[MAX_NODE];
 static int smmObj_energy[MAX_NODE];
+#endif
+
 static int smmObj_noNode=0;
 
-
-
+//3. 관련 함수 변경
 //object generation
-void smmObj_genNode(char* name, int type, int credit, int energy)
+void smmObj_genObject(char* name, int type, int credit, int energy, nt energy, smmObjGrade_e grade)
 {
-    strcpy(smmObj_name[smmObj_noNode], name);
-    smmObj_type[smmObj_noNode] = type;
-    smmObj_credit[smmObj_noNode] = credit;
-    smmObj_energy[smmObj_noNode] = energy;
+	    smmObject_t* ptr;
     
-    smmObj_noNode++;
+    ptr = (smmObject_t*)malloc(sizeof(smmObject_t));
+    
+    strcpy(ptr->name, name);
+    ptr->objType = objType;
+    ptr->type = type;
+    ptr->credit = credit;
+    ptr->energy = energy;
+    ptr->grade = grade;
+    
+    return ptr;
 }
 
-char* smmObj_getNodeName(int node_nr)
-{
-    return smmObj_name[node_nr];
-}
 
 int smmObj_getNodeType(int node_nr)
 {
-    return smmObj_type[node_nr];
+    return smm_node[node_nr].type;
 }
 
-#if 0
 
 
-//member retrieving
-
-
-
-//element to string
-char* smmObj_getNodeName(smmNode_e type)
+char* smmObj_getNodeCredit(int node_nr)
 {
-    return smmNodeName[type];
+    return smm_node[node_nr].credit;
 }
 
-char* smmObj_getGradeName(smmGrade_e grade)
+char* smmObj_getGradeEnergy(int node_nr)
 {
-    return smmGradeName[grade];
+    return smm_node[node_nr].energy;
 }
 
-#endif
+
