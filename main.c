@@ -10,12 +10,15 @@
 #include "smm_object.h"
 #include "smm_database.h"
 #include "smm_common.h"
+#include "smm_object.c"
 
 #define BOARDFILEPATH "marbleBoardConfig.txt"
 #define FOODFILEPATH "marbleFoodConfig.txt"
 #define FESTFILEPATH "marbleFestivalConfig.txt"
 
+#ifndef MAX_PLAYER
 #define MAX_PLAYER     100
+#endif
 
 //board configuration parameters
 static int board_nr;
@@ -61,6 +64,8 @@ void printGrades(int player)
          printf("%s : %i\n", smmObj_getNodeName(gradePtr), smmObj_getNodeGrade(gradePtr));
      }
 }
+
+
 
 void printPlayerStatus(void)
 {
@@ -116,6 +121,7 @@ int rolldie(int player)
 }
 
 
+
 //action code when a player stays at a node
 void actionNode(int player)
 {
@@ -129,7 +135,7 @@ void actionNode(int player)
     {
         //case lecture:
         case SMMNODE_TYPE_LECTURE:
-             if 
+            if (cur_player[player].energy>energyCost) 
             cur_player[player].accumCredit += smmObj_getNodeCredit( boardPtr );
             cur_player[player].energy -= smmObj_getNodeEnergy( boardPtr );
             
@@ -174,7 +180,7 @@ int main(int argc, const char * argv[]) {
     
     //1. import parameters ---------------------------------------------------------------------------------
     //1-1. boardConfig 
-    if ((fp = fopen(BOARDFILEPATH,"r")) == NULL)
+    if ((fp = fopen(BOARDFILEPATH(txt파일을 열어야함),"r")) == NULL)
     {
         printf("[ERROR] failed to open %s. This file should be in the same directory of SMMarble.exe.\n", BOARDFILEPATH);
         getchar();

@@ -98,7 +98,7 @@ static int updateIndex(int list_nr)
                 3. make the last node's next pointer to point the new node
                 4. update the index
 */
-int smmdb_addTail(int list_nr, void* obj)
+int smmdb_addTail(int list_nr, void* obj) // add new data at last of the list
 {
     node_t* ndPtr;
     node_t* newNdPtr;

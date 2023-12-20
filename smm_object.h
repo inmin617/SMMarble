@@ -7,6 +7,7 @@
 
 #ifndef smm_object_h
 #define smm_object_h
+#include "smm_object.c"
 
 #define SMMNODE_TYPE_LECTURE            0
 #define SMMNODE_TYPE_RESTAURANT         1
@@ -18,11 +19,6 @@
 
 #define SMMNODE_TYPE_MAX                7
 
-typedef enum smmObjType {
-    smmObjType_board = 0,
-    smmObjType_card,
-    smmObjType_grade
-} smmObjType_e;
 
 /* node type :
     lecture,
