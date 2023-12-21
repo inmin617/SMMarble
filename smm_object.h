@@ -87,8 +87,6 @@ int smmObj_getNodeEnergy(int node_nr);
 //element to string
 char* smmObj_getTypeName(int type);
 
-//소요에너지 가져오는 함수
-int getEnergyCost(const char* filename); 
 
 
 #endif /* smm_object_h */
