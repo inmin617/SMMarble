@@ -18,6 +18,7 @@
 #define MAX_LINELENGTH	4
 #define SMMNODE_TYPE_MAX	7
 
+
 static char smmNodeName[SMMNODE_TYPE_MAX][MAX_CHARNAME] = {
        "강의",
        "식당",
@@ -33,42 +34,12 @@ char* smmObj_getTypeName(int type)
       return (char*)smmNodeName[type];
 }
 
-typedef enum smmObjGrade {
-    smmObjGrade_Ap = 0,
-    smmObjGrade_A0,
-    smmObjGrade_Am,
-    smmObjGrade_Bp,
-    smmObjGrade_B0,
-    smmObjGrade_Bm,
-    smmObjGrade_Cp,
-    smmObjGrade_C0,
-    smmObjGrade_Cm
-} smmObjGrade_e; //defining grade 
 
-//1. 구조체 형식 정의
-typedef enum smmObjType {
-    smmObjType_board = 0,
-    smmObjType_card,
-    smmObjType_grade
-} smmObjType_e;
-
-typedef struct smmObject{
-	char name[MAX_CHARNAME];
-	smmObjType_e objType;
-	int type;
-	int credit;
-	int energy;
-	smmObjGrade_e grade;
-}; smmObject_t; 
-
-//2. 구조체 배열 변수 정의 
-
-static smmObject_t = smm_node[MAX_NODE];
+static smmObject_t smm_node[MAX_NODE];
 
 //3. 관련 함수 변경
 //object generation
- smmObj_genObject(char* name, int type, int credit, int energy, smmObjGrade_e grade)
-{
+void smmObj_genObject(char* name, smmObjType_e objType, int type, int credit, int energy, smmObjGrade_e grade){
 	smmObject_t* ptr;
     
     ptr = (smmObject_t*)malloc(sizeof(smmObject_t));
@@ -83,9 +54,12 @@ static smmObject_t = smm_node[MAX_NODE];
     return ptr;
 }
 
-char* smmObj_getNodeName(int node_nr)
+//member retrieving
+char* smmObj_getNodeName(void* obj)
 {
-	return smm_node[node_nr].name;
+    smmObject_t* ptr = (smmObject_t*)obj;
+    
+    return ptr->name;
 }
 
 int smmObj_getNodeType(int node_nr)
@@ -109,7 +83,7 @@ int smmObj_getGradeEnergy(int node_nr)
 
 int getEnergyCost(const char* filename)
 {
-    FILE* file = fopen(filname, "r");
+    FILE* file = fopen("marbleBoardConfig", "r");
 
     if (file == NULL) {
         fprintf(stderr, "파일을 열 수 없습니다.\n");

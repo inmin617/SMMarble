@@ -91,7 +91,8 @@ void generatePlayers(int n, int initEnergy) //generate a new player
          //input name
          printf("Input player %i's name: ", i);  
          scanf("%s", cur_player[i].name);
-         fflush(stdin);
+         
+         while (getchar() != '\n');
          
          //set position
          cur_player[i].position = 0;
@@ -130,17 +131,18 @@ void actionNode(int player)
     int type = smmObj_getNodeType( boardPtr );
     char *name = smmObj_getNodeName( boardPtr );
     void *gradePtr;
+    
 	
     switch(type)
     {
         //case lecture:
         case SMMNODE_TYPE_LECTURE:
-            if (cur_player[player].energy>energyCost) 
+            if (cur_player[player].energy > smmObj_getNodeCredit(boardPtr)) 
             cur_player[player].accumCredit += smmObj_getNodeCredit( boardPtr );
             cur_player[player].energy -= smmObj_getNodeEnergy( boardPtr );
             
             //grade generation
-            gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit( boardPtr ), 0, ??);
+            gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit( boardPtr ), 0, smmObjGrade_e);
             smmdb_addTail(LISTNO_OFFSET_GRADE + player, gradePtr);
             
             break;

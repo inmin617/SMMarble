@@ -5,9 +5,12 @@
 //  Created by Juyeop Kim on 2023/11/05.
 //
 
+
 #ifndef smm_object_h
 #define smm_object_h
-#include "smm_object.c"
+
+#include <string.h> 
+#define MAX_CHARNAME 	200
 
 #define SMMNODE_TYPE_LECTURE            0
 #define SMMNODE_TYPE_RESTAURANT         1
@@ -18,6 +21,12 @@
 #define SMMNODE_TYPE_FESTIVAL           6
 
 #define SMMNODE_TYPE_MAX                7
+
+typedef enum smmObjType {
+    smmObjType_board = 0,
+    smmObjType_card,
+    smmObjType_grade
+} smmObjType_e;
 
 
 /* node type :
@@ -30,6 +39,26 @@
     festival
 */
 
+typedef enum smmObjGrade {
+    smmObjGrade_Ap = 0,
+    smmObjGrade_A0,
+    smmObjGrade_Am,
+    smmObjGrade_Bp,
+    smmObjGrade_B0,
+    smmObjGrade_Bm,
+    smmObjGrade_Cp,
+    smmObjGrade_C0,
+    smmObjGrade_Cm
+} smmObjGrade_e;
+
+typedef struct smmObject{
+	char name[MAX_CHARNAME];
+	smmObjType_e objType;
+	int type;
+	int credit;
+	int energy;
+	smmObjGrade_e grade;
+} smmObject_t; 
 
 /* grade :
     A+,
@@ -50,13 +79,16 @@ void smmObj_genObject(char* name, smmObjType_e objType, int type, int credit, in
 
 
 //member retrieving
-char* smmObj_getNodeName(int node_nr);
+char* smmObj_getNodeName(void* obj);
 int smmObj_getNodeType(int node_nr);
 int smmObj_getNodeCredit(int node_nr);
 int smmObj_getNodeEnergy(int node_nr);
 
 //element to string
 char* smmObj_getTypeName(int type);
+
+//소요에너지 가져오는 함수
+int getEnergyCost(const char* filename); 
 
 
 #endif /* smm_object_h */
